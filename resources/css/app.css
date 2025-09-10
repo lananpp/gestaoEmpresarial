@@ -1,0 +1,246 @@
+@import 'tailwindcss';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --azul-marinho: #1a365d;
+    --azul-marinho-claro: #2a4a7f;
+    --cinza-escuro: #2d3748;
+    --cinza-medio: #4a5568;
+    --cinza-claro: #e2e8f0;
+    --cinza-bg: #f7fafc;
+}
+
+body {
+    background-color: var(--cinza-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar estilizada */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--cinza-escuro) 100%);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Cards modernos */
+.card-custom {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Botões personalizados */
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-marinho-claro) 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--cinza-escuro) 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 60px 40px;
+}
+
+/* Login page improvements */
+.login-card {
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.login-header {
+    background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-marinho-claro) 100%);
+    border-radius: 20px 20px 0 0;
+    padding: 30px;
+    color: white;
+    text-align: center;
+}
+
+/* Novas classes de cores */
+.text-azul-marinho { color: var(--azul-marinho) !important; }
+.bg-azul-marinho { background-color: var(--azul-marinho) !important; }
+.border-azul-marinho { border-color: var(--azul-marinho) !important; }
+
+.text-cinza-escuro { color: var(--cinza-escuro) !important; }
+.bg-cinza-escuro { background-color: var(--cinza-escuro) !important; }
+
+.bg-cinza-claro { background-color: var(--cinza-claro) !important; }
+
+/* Botão outline personalizado */
+.btn-outline-azul-marinho {
+    color: var(--azul-marinho);
+    border-color: var(--azul-marinho);
+    background: transparent;
+}
+
+.btn-outline-azul-marinho:hover {
+    background: var(--azul-marinho);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Badges personalizadas */
+.badge-custom {
+    background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-marinho-claro) 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+/* Admin Styles */
+.sidebar {
+    background: linear-gradient(180deg, var(--azul-marinho) 0%, var(--cinza-escuro) 100%);
+    min-height: 100vh;
+    color: white;
+    position: fixed;
+    width: 280px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-brand {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.sidebar-item {
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left-color: var(--cinza-claro);
+}
+
+.sidebar-item.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-left-color: white;
+}
+
+.sidebar-item i {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.main-content {
+    margin-left: 280px;
+    padding: 20px;
+    background-color: var(--cinza-bg);
+    min-height: 100vh;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    border: none;
+}
+
+.stats-card {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--azul-marinho);
+    margin-bottom: 10px;
+}
+
+.stats-label {
+    color: var(--cinza-medio);
+    font-weight: 500;
+}
+
+.table-custom {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.table-custom th {
+    background: var(--azul-marinho);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.table-custom td {
+    padding: 15px;
+    vertical-align: middle;
+    border-color: var(--cinza-claro);
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
