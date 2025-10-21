@@ -143,59 +143,56 @@
     </div>
     
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card card-custom h-100">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop&auto=format" 
-                     class="card-img-top" alt="Sistema Gestão" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <span class="badge bg-primary mb-2">Software</span>
-                    <h5 class="card-title fw-bold">Sistema Gestão Pro</h5>
-                    <p class="card-text text-muted">Sistema completo para gestão empresarial integrada</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="h5 text-primary fw-bold">R$ 299,90</span>
-                        <a href="{{ route('produtos.show', 1) }}" class="btn btn-primary-custom btn-sm">
-                            <i class="bi bi-eye me-1"></i>Ver Detalhes
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @php
+            $produtosDestaque = \App\Models\Produto::latest()->take(3)->get();
+        @endphp
         
+        @foreach($produtosDestaque as $produto)
         <div class="col-md-4">
             <div class="card card-custom h-100">
-                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop&auto=format" 
-                     class="card-img-top" alt="Headphone" style="height: 200px; object-fit: cover;">
+                @if($produto->imagem)
+                    <img src="{{ asset('storage/' . $produto->imagem) }}" 
+                         class="card-img-top" alt="{{ $produto->nome }}" 
+                         style="height: 200px; object-fit: cover;">
+                @else
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                         style="height: 200px;">
+                        <i class="bi bi-image text-muted fs-1"></i>
+                    </div>
+                @endif
                 <div class="card-body">
-                    <span class="badge bg-primary mb-2">Hardware</span>
-                    <h5 class="card-title fw-bold">Headphone Executive</h5>
-                    <p class="card-text text-muted">Fone premium para reuniões e calls profissionais</p>
+                    <span class="badge bg-primary mb-2">
+                        @if($produto->preco < 100)
+                            Promoção
+                        @elseif($produto->preco > 500)
+                            Premium
+                        @else
+                            Popular
+                        @endif
+                    </span>
+                    <h5 class="card-title fw-bold">{{ $produto->nome }}</h5>
+                    <p class="card-text text-muted">
+                        {{ Str::limit($produto->descricao, 80) }}
+                    </p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="h5 text-primary fw-bold">R$ 199,90</span>
-                        <a href="{{ route('produtos.show', 2) }}" class="btn btn-primary-custom btn-sm">
+                        <span class="h5 text-primary fw-bold">R$ {{ number_format($produto->preco, 2, ',', '.') }}</span>
+                        <a href="{{ route('produtos.show', $produto->id) }}" class="btn btn-primary-custom btn-sm">
                             <i class="bi bi-eye me-1"></i>Ver Detalhes
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+        @endforeach
         
-        <div class="col-md-4">
-            <div class="card card-custom h-100">
-                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop&auto=format" 
-                     class="card-img-top" alt="Consultoria" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <span class="badge bg-primary mb-2">Serviços</span>
-                    <h5 class="card-title fw-bold">Consultoria Business</h5>
-                    <p class="card-text text-muted">Consultoria especializada em gestão empresarial</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="h5 text-primary fw-bold">R$ 1.500,00</span>
-                        <a href="{{ route('produtos.show', 4) }}" class="btn btn-primary-custom btn-sm">
-                            <i class="bi bi-eye me-1"></i>Ver Detalhes
-                        </a>
-                    </div>
-                </div>
-            </div>
+        @if($produtosDestaque->count() == 0)
+        <div class="col-12 text-center py-4">
+            <p class="text-muted">Nenhum produto cadastrado ainda.</p>
+            <a href="{{ route('login') }}" class="btn btn-primary-custom">
+                <i class="bi bi-plus-circle me-2"></i>Cadastrar Primeiro Produto
+            </a>
         </div>
+        @endif
     </div>
 </section>
 

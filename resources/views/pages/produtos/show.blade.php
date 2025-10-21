@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $produto['nome'] . ' - Gestão Empresarial')
+@section('title', $produto->nome . ' - Gestão Empresarial')
 
 @section('content')
 <div class="container py-5">
@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('produtos.index') }}">Produtos</a></li>
-            <li class="breadcrumb-item active">{{ $produto['nome'] }}</li>
+            <li class="breadcrumb-item active">{{ $produto->nome }}</li>
         </ol>
     </nav>
 
@@ -16,8 +16,16 @@
         <!-- Imagem do Produto -->
         <div class="col-md-6">
             <div class="card card-custom p-4">
-                <img src="{{ $produto['imagem'] }}" 
-                     alt="{{ $produto['nome'] }}" class="img-fluid rounded-3" style="height: 400px; object-fit: cover;">
+                @if($produto->imagem)
+                    <img src="{{ asset('storage/' . $produto->imagem) }}" 
+                         alt="{{ $produto->nome }}" class="img-fluid rounded-3" 
+                         style="height: 400px; object-fit: cover;">
+                @else
+                    <div class="bg-light d-flex align-items-center justify-content-center rounded-3" 
+                         style="height: 400px;">
+                        <i class="bi bi-image text-muted display-1"></i>
+                    </div>
+                @endif
             </div>
         </div>
         
@@ -25,16 +33,19 @@
         <div class="col-md-6">
             <div class="card card-custom p-4 h-100">
                 <span class="badge bg-success mb-3">Disponível</span>
-                <h1 class="fw-bold text-azul-marinho">{{ $produto['nome'] }}</h1>
-                <p class="text-muted mb-3">Categoria: {{ $produto['categoria'] }}</p>
+                <h1 class="fw-bold text-azul-marinho">{{ $produto->nome }}</h1>
                 
                 <div class="d-flex align-items-center mb-3">
-                    <span class="h3 text-azul-marinho fw-bold me-3">R$ {{ number_format($produto['preco'], 2, ',', '.') }}</span>
-                    <span class="text-success fw-semibold"><i class="bi bi-tag"></i> Em promoção</span>
+                    <span class="h3 text-azul-marinho fw-bold me-3">R$ {{ number_format($produto->preco, 2, ',', '.') }}</span>
+                    @if($produto->preco < 100)
+                        <span class="text-success fw-semibold"><i class="bi bi-tag"></i> Promoção</span>
+                    @elseif($produto->preco > 500)
+                        <span class="text-warning fw-semibold"><i class="bi bi-star"></i> Premium</span>
+                    @endif
                 </div>
                 
                 <p class="mb-4">
-                    {{ $produto['descricao'] }}
+                    {{ $produto->descricao }}
                 </p>
                 
                 <div class="mb-4">

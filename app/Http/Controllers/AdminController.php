@@ -2,83 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function login() {
-        return view('pages.admin.login');
+        return view('pages.login'); // Agora usa a mesma página de login
     }
 
     public function dashboard() {
         return view('pages.admin.dashboard');
     }
 
-   public function clientes()
-{
-    // Dados fictícios de clientes
-    $clientes = [
-        [
-            'id' => 1,
-            'nome' => 'Empresa ABC Ltda',
-            'email' => 'contato@empresaabc.com',
-            'telefone' => '(11) 9999-8888',
-            'status' => 'ativo',
-            'data_cadastro' => '2024-01-15'
-        ],
-        [
-            'id' => 2,
-            'nome' => 'Comércio XYZ S/A',
-            'email' => 'vendas@xyzcomercio.com',
-            'telefone' => '(11) 7777-6666',
-            'status' => 'ativo',
-            'data_cadastro' => '2024-02-20'
-        ],
-        [
-            'id' => 3,
-            'nome' => 'Serviços 123 MEI',
-            'email' => 'admin@servicos123.com',
-            'telefone' => '(11) 5555-4444',
-            'status' => 'inativo',
-            'data_cadastro' => '2024-03-10'
-        ],
-        [
-            'id' => 4,
-            'nome' => 'Indústria Moderna',
-            'email' => 'industria@moderna.com',
-            'telefone' => '(11) 3333-2222',
-            'status' => 'ativo',
-            'data_cadastro' => '2024-01-05'
-        ],
-        [
-            'id' => 5,
-            'nome' => 'Tech Solutions',
-            'email' => 'contato@techsolutions.com',
-            'telefone' => '(11) 1111-0000',
-            'status' => 'pendente',
-            'data_cadastro' => '2024-04-01'
-        ]
-    ];
+    public function clientes()
+    {
+        // Buscar clientes REAIS do banco de dados
+        $clientes = Cliente::all();
+        
+        return view('pages.admin.clientes.index', compact('clientes'));
+    }
 
-    return view('pages.admin.clientes.index', compact('clientes'));
-}
+    public function clienteshow($id)
+    {
+        // Buscar cliente REAL do banco de dados
+        $cliente = Cliente::find($id);
+        
+        // Se não encontrar o cliente, redireciona
+        if (!$cliente) {
+            return redirect()->route('admin.clientes.index')
+                ->with('error', 'Cliente não encontrado!');
+        }
 
-public function clienteshow($id)
-{
-    // Cliente fictício baseado no ID
-    $cliente = [
-        'id' => $id,
-        'nome' => 'Cliente ' . $id,
-        'email' => 'cliente' . $id . '@empresa.com',
-        'telefone' => '(11) 9999-888' . $id,
-        'empresa' => 'Empresa ' . $id . ' Ltda',
-        'cnpj' => '00.000.000/0001-' . str_pad($id, 2, '0', STR_PAD_LEFT),
-        'endereco' => 'Rua Exemplo, 123 - Centro, São Paulo - SP',
-        'status' => 'ativo',
-        'data_cadastro' => '2024-01-15',
-        'ultimo_acesso' => now()->subDays($id)->format('d/m/Y H:i')
-    ];
+        return view('pages.admin.clientes.show', compact('cliente'));
+    }
 
-    return view('pages.admin.clientes.show', compact('cliente'));
-}
+    public function produtos()
+    {
+        // Buscar produtos REAIS do banco de dados
+        $produtos = Produto::all();
+        
+        return view('pages.admin.produtos.index', compact('produtos'));
+    }
+
+    public function createProduto()
+    {
+        return view('pages.admin.produtos.create');
+    }
+
+    public function storeProduto(Request $request)
+    {
+        // Validação dos dados
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'preco' => 'required|numeric|min:0',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        // Upload da imagem
+        if ($request->hasFile('imagem')) {
+            $imagePath = $request->file('imagem')->store('produtos', 'public');
+            $validated['imagem'] = $imagePath;
+        }
+
+        // Criar produto no banco de dados
+        Produto::create($validated);
+
+        return redirect()->route('admin.produtos.index')
+            ->with('success', 'Produto cadastrado com sucesso!');
+    }
 }

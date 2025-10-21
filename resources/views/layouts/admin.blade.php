@@ -23,7 +23,7 @@
             <a href="{{ route('admin.clientes.index') }}" class="sidebar-item {{ request()->is('admin/clientes*') ? 'active' : '' }}">
                 <i class="bi bi-people"></i> Clientes
             </a>
-            <a href="#" class="sidebar-item">
+            <a href="{{ route('admin.produtos.index') }}" class="sidebar-item {{ request()->is('admin/produtos*') ? 'active' : '' }}">
                 <i class="bi bi-box-seam"></i> Produtos
             </a>
             <a href="#" class="sidebar-item">
@@ -32,18 +32,18 @@
             <a href="#" class="sidebar-item">
                 <i class="bi bi-graph-up"></i> Relatórios
             </a>
-            <a href="#" class="sidebar-item">
-                <i class="bi bi-gear"></i> Configurações
-            </a>
         </div>
 
         <div class="sidebar-menu mt-5">
             <a href="{{ route('home') }}" class="sidebar-item">
                 <i class="bi bi-house"></i> Site Principal
             </a>
-            <a href="#" class="sidebar-item">
-                <i class="bi bi-box-arrow-right"></i> Sair
-            </a>
+            <form method="POST" action="{{ route('logout.fake') }}">
+                @csrf
+                <button type="submit" class="sidebar-item w-100 text-start border-0 bg-transparent text-white">
+                    <i class="bi bi-box-arrow-right"></i> Sair
+                </button>
+            </form>
         </div>
     </div>
 
@@ -72,7 +72,12 @@
                         <li><a class="dropdown-item" href="#">Perfil</a></li>
                         <li><a class="dropdown-item" href="#">Configurações</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sair</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout.fake') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Sair</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

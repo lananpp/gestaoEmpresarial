@@ -40,7 +40,7 @@
                 @if(session('user_logged_in'))
                     <!-- Se ESTIVER logado: mostra botão de Painel e Logout -->
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-speedometer2 me-1"></i>Meu Painel
+                        <i class="bi bi-speedometer2 me-1"></i>Painel Admin
                     </a>
                     <form method="POST" action="{{ route('logout.fake') }}">
                         @csrf
@@ -49,9 +49,9 @@
                         </button>
                     </form>
                 @else
-                    <!-- Se NÃO ESTIVER logado: mostra botões de Login e Cadastro -->
+                    <!-- Se NÃO ESTIVER logado: mostra apenas botão de Login Admin e Cadastro -->
                     <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                        <i class="bi bi-shield-lock me-1"></i>Login Admin
                     </a>
                     <a href="{{ route('cadastro') }}" class="btn btn-light btn-sm">
                         <i class="bi bi-person-plus me-1"></i>Cadastrar

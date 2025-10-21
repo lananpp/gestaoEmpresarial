@@ -28,7 +28,6 @@
                 <button class="btn btn-outline-azul-marinho active">Todos</button>
                 <button class="btn btn-outline-azul-marinho">Ativos</button>
                 <button class="btn btn-outline-azul-marinho">Inativos</button>
-                <button class="btn btn-outline-azul-marinho">Premium</button>
             </div>
         </div>
     </div>
@@ -57,30 +56,24 @@
                                 <i class="bi bi-building text-white"></i>
                             </div>
                             <div>
-                                <div class="fw-semibold">{{ $cliente['nome'] }}</div>
-                                <small class="text-muted">ID: CL{{ str_pad($cliente['id'], 4, '0', STR_PAD_LEFT) }}</small>
+                                <div class="fw-semibold">{{ $cliente->nome }} {{ $cliente->sobrenome }}</div>
+                                <small class="text-muted">ID: CL{{ str_pad($cliente->id, 4, '0', STR_PAD_LEFT) }}</small>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div>{{ $cliente['email'] }}</div>
-                        <small class="text-muted">{{ $cliente['telefone'] }}</small>
+                        <div>{{ $cliente->email }}</div>
+                        <small class="text-muted">{{ $cliente->cpf }}</small>
                     </td>
                     <td>
-                        @if($cliente['status'] == 'ativo')
-                            <span class="status-badge status-active">Ativo</span>
-                        @elseif($cliente['status'] == 'inativo')
-                            <span class="status-badge status-inactive">Inativo</span>
-                        @else
-                            <span class="status-badge status-pending">Pendente</span>
-                        @endif
+                        <span class="status-badge status-active">Ativo</span>
                     </td>
                     <td>
-                        {{ date('d/m/Y', strtotime($cliente['data_cadastro'])) }}
+                        {{ $cliente->created_at->format('d/m/Y') }}
                     </td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{ route('admin.clientes.show', $cliente['id']) }}" class="btn btn-sm btn-outline-azul-marinho" title="Visualizar">
+                            <a href="{{ route('admin.clientes.show', $cliente->id) }}" class="btn btn-sm btn-outline-azul-marinho" title="Visualizar">
                                 <i class="bi bi-eye"></i>
                             </a>
                             <button class="btn btn-sm btn-outline-azul-marinho" title="Editar">
